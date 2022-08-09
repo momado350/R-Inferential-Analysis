@@ -1,0 +1,40 @@
+---
+title: "Propensity Score Weighting"
+output: html-notebook
+---
+
+```{r}
+# import dataset
+los_sample <- read.csv("los_sample.csv")
+```
+
+# Checkpoint 1
+```{r}
+# Print the dataset
+print(los_sample)
+
+```
+
+# Checkpoint 2
+```{r}
+# Uncomment for IPTW weights for the ATE
+los_sample$ATE_weight <- ifelse(
+ los_sample$low_ef == 0,
+ 1 / (1 - los_sample$ps),
+ 1 / los_sample$ps
+)
+# Print the dataset
+print(los_sample)
+```
+
+# Checkpoint 3
+```{r}
+# Uncomment for IPTW weights for the ATT
+los_sample$ATT_weight <- ifelse(
+ los_sample$low_ef == 0, 
+ los_sample$ps / (1 - los_sample$ps), 
+ 1
+)
+# Print the dataset
+print(los_sample)
+```

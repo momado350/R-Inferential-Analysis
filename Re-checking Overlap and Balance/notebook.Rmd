@@ -1,0 +1,52 @@
+---
+title: "Re-checking Overlap and Balance"
+output: html-notebook
+---
+```{r, message=FALSE}
+# import libraries
+library(WeightIt)
+library(cobalt)
+# import dataset
+los_data <- read.csv("los_data.csv")
+# create IPTW weights
+iptw_ef <- weightit(
+  formula = low_ef ~ age + cholesterol,
+  data = los_data, 
+  estimand = "ATT",
+  method = "ps"
+)
+```
+# Checkpoint 1
+```{r}
+# Create balance plot here
+# create balance plot of propensity scores
+ ps_bal <- bal.plot(
+  x = iptw_ef, #weightit object
+  var.name = "prop.score", #propensity scores
+  which = "both", #before and after
+  colors = c("#E69F00", "#009E73") #sets fill colors
+)
+
+```
+# Checkpoint 2
+```{r}
+# Print ps_bal
+print(ps_bal)
+
+```
+# Checkpoint 3
+```{r}
+# Create a Love plot here
+ps_love <- love.plot(
+  x = iptw_ef, #weightit object
+  binary = "std", #use SMD
+  thresholds = c(m = 0.1), #guidelines
+  colors = c("#E69F00", "#009E73") #sets fill colors
+)
+```
+# Checkpoint 4
+```{r}
+# Print ps_love
+print(ps_love)
+
+```

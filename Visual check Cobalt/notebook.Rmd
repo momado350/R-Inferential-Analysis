@@ -1,0 +1,29 @@
+---
+title: "Visual Check of Categorical Variables"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(cobalt)
+
+# import dataset
+los_data <- read.csv("los_data.csv")
+```
+
+# Checkpoint 1
+```{r}
+# Create a balance plot for heart_attack
+heart_plot <- bal.plot(
+  x = low_ef ~ heart_attack, #formula
+  data = los_data, #dataset
+  var.name = "heart_attack", #variable 
+  colors = c("#E69F00", "#009E73") #set fill colors 
+)
+```
+
+# Checkpoint 2
+```{r}
+# Print heart_plot here
+print(heart_plot)
+```

@@ -1,0 +1,45 @@
+---
+title: "Estimating Causal Effects"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(WeightIt)
+library(lmtest)
+library(sandwich)
+# import dataset
+los_data <- read.csv("los_data.csv")
+
+# create IPTW weights
+iptw_ef2 <- weightit(
+  formula = low_ef ~ age + cholesterol + heart_attack, #propensity model
+  data = los_data, #dataset
+  estimand = "ATT", #effect
+  method = "ps", #use IPTW
+)
+```
+# Checkpoint 1
+```{r}
+# Create outcome model
+outcome_mod <- glm(
+  #outcome model
+  hospital_los ~ low_ef + age + cholesterol + heart_attack, 
+  #dataset
+  data = los_data,
+  #IPTW weights 
+  weights = iptw_ef2$weights)
+```
+# Checkpoint 2
+```{r}
+# Get coefficients with robust standard errors
+att_robust <- coeftest(
+  outcome_mod, #weighted outcome model
+  vcov. = vcovHC #robust standard errors
+)
+```
+# Checkpoint 3
+```{r}
+# View the estimated coefficients
+print(att_robust)
+```

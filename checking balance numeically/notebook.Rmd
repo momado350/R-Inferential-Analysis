@@ -1,0 +1,30 @@
+---
+title: "Checking Balance Numerically"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(cobalt)
+
+# import dataset
+los_data <- read.csv("los_data.csv")
+```
+
+# Checkpoint 1
+```{r, message=FALSE}
+# Create a balance table here
+bt <- bal.tab(
+  x = low_ef ~ age + cholesterol + heart_attack, #formula
+  data = los_data, #dataset
+  disp.v.ratio = TRUE, #display variance ratio
+  binary = "std" #SMDs for binary variables
+)
+```
+
+# Checkpoint 2
+```{r}
+# Print balance table here
+print(bt)
+
+```

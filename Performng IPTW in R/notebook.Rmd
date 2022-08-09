@@ -1,0 +1,17 @@
+---
+title: "Performing IPTW in R"
+output: html-notebook
+---
+
+```{r, message=FALSE}
+# import libraries
+library(WeightIt)
+# import dataset
+los_data <- read.csv("los_data.csv")
+```
+
+# Checkpoint 1
+```{r}
+# Create a weightit object called iptw_ef
+
+```
